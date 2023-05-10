@@ -5,7 +5,9 @@ const POSTS_TABLENAME = "posts";
 
 const getPosts = async (req, res) => {
   try {
-    const posts = await query(`SELECT * FROM ${POSTS_TABLENAME};`);
+    const posts = await query(
+      `SELECT * FROM ${POSTS_TABLENAME} ORDER BY id ASC;`
+    );
 
     res.status(200).json(posts.rows);
   } catch (err) {
@@ -51,10 +53,31 @@ const createPost = async (req, res) => {
   }
 };
 
-const modifyPost = async (req, res) => {};
+const modifyPost = async (req, res) => {
+  try {
+    const { titulo, url, descripcion } = req.body;
+    const { id } = req.params;
+
+    const updatedPost = await query(
+      `UPDATE ${POSTS_TABLENAME} SET titulo = $1, img = $2, descripcion = $3 WHERE id = $4;`,
+      [titulo, url, descripcion, id]
+    );
+
+    if (updatedPost.rowCount === 0) {
+      res.status(404).json({ error: "Post not found" });
+      return;
+    }
+
+    res.status(204).end();
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
 
 export default {
   getPosts,
   getPost,
   createPost,
+  modifyPost,
 };

@@ -1,15 +1,5 @@
-const validate = (req, res, next) => {
-  const { titulo, img, descripcion } = req.body;
+import validateBody from "./body/validateSongBody.js";
 
-  if (!titulo || !img || !descripcion) {
-    res.status(400).json({
-      error: "Todos los campos son obligatorios",
-    });
+const validatorArray = [validateBody];
 
-    return;
-  }
-
-  next();
-};
-
-export default validate;
+export default validatorArray;
