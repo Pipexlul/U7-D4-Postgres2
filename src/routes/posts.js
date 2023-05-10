@@ -1,6 +1,8 @@
 import dbManager from "../database/manager.js";
 const { query } = dbManager;
 
+import asyncLoader from "../middleware/asyncMiddleware.js";
+
 const POSTS_TABLENAME = "posts";
 
 const getPosts = async (req, res) => {
@@ -97,9 +99,9 @@ const deletePost = async (req, res) => {
 };
 
 export default {
-  getPosts,
-  getPost,
-  createPost,
-  modifyPost,
-  deletePost,
+  getPosts: asyncLoader(getPosts),
+  getPost: asyncLoader(getPost),
+  createPost: asyncLoader(createPost),
+  modifyPost: asyncLoader(modifyPost),
+  deletePost: asyncLoader(deletePost),
 };
