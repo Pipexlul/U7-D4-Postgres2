@@ -75,9 +75,31 @@ const modifyPost = async (req, res) => {
   }
 };
 
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedPost = await query(
+      `DELETE FROM ${POSTS_TABLENAME} WHERE id = $1;`,
+      [id]
+    );
+
+    if (deletedPost.rowCount === 0) {
+      res.status(404).json({ error: "Post not found" });
+      return;
+    }
+
+    res.status(204).end();
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export default {
   getPosts,
   getPost,
   createPost,
   modifyPost,
+  deletePost,
 };

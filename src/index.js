@@ -8,6 +8,7 @@ import asyncLoader from "./middleware/asyncMiddleware.js";
 import getPostValidator from "./middleware/getPostValidator.js";
 import createPostValidator from "./middleware/createPostValidator.js";
 import modifyPostValidator from "./middleware/modifyPostValidator.js";
+import deletePostValidator from "./middleware/deletePostValidator.js";
 
 import postsRoutes from "./routes/posts.js";
 
@@ -27,6 +28,11 @@ const main = async () => {
     "/posts/:id",
     modifyPostValidator,
     asyncLoader(postsRoutes.modifyPost)
+  );
+  app.delete(
+    "/posts/:id",
+    deletePostValidator,
+    asyncLoader(postsRoutes.deletePost)
   );
 
   app.listen(DEFAULT_PORT, () => {
