@@ -5,6 +5,7 @@ import express from "express";
 import cors from "cors";
 
 import asyncLoader from "./middleware/asyncMiddleware.js";
+import getPostValidator from "./middleware/getPostValidator.js";
 import createPostValidator from "./middleware/createPostValidator.js";
 import postsRoutes from "./routes/posts.js";
 
@@ -18,6 +19,7 @@ const main = async () => {
   app.use(express.json());
 
   app.get("/posts", asyncLoader(postsRoutes.getPosts));
+  app.get("/posts/:id", getPostValidator, asyncLoader(postsRoutes.getPost));
   app.post("/posts", createPostValidator, asyncLoader(postsRoutes.createPost));
 
   app.listen(DEFAULT_PORT, () => {

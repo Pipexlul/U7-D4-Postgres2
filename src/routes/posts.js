@@ -14,6 +14,27 @@ const getPosts = async (req, res) => {
   }
 };
 
+const getPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const post = await query(
+      `SELECT * FROM ${POSTS_TABLENAME} WHERE id = $1;`,
+      [id]
+    );
+
+    if (post.rows.length === 0) {
+      res.status(404).json({ error: "Post not found" });
+      return;
+    }
+
+    return res.status(200).json(post.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
 const createPost = async (req, res) => {
   try {
     const { titulo, url, descripcion } = req.body;
@@ -30,7 +51,10 @@ const createPost = async (req, res) => {
   }
 };
 
+const modifyPost = async (req, res) => {};
+
 export default {
   getPosts,
+  getPost,
   createPost,
 };
