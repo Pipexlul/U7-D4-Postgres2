@@ -1,4 +1,4 @@
-# Unidad 7 - Desafio 3: Postgres 1
+# Unidad 7 - Desafio 4: Postgres 2
 
 ## Instrucciones
 
@@ -18,13 +18,18 @@
 
 - Llamar los endpoints <br/>
   `GET /posts` <br/>
+  `GET /posts/:id` <br/>
   o <br/>
   `POST /posts`
+  o <br/>
+  `PUT /posts/:id`
+  o <br/>
+  `DELETE /posts/:id`
 
 ## Notas
 
-La ruta `POST /posts` contiene un middleware validador en el que espera que 3 propiedades de un objeto JSON existan y no estén vacias. <br/>
+Las rutas `POST /posts` y `PUT /posts/:id` contienen un middleware validador en el que espera que 3 propiedades de un objeto JSON existan y no estén vacias. <br/>
 Las propiedades son: <br/>
 `titulo` <br/>
-`img` <br/>
+`url` <br/>
 `descripcion` <br/>
