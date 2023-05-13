@@ -32,7 +32,7 @@ const getPost = async (req, res) => {
       return;
     }
 
-    return res.status(200).json(post.rows);
+    res.status(200).json(post.rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
